@@ -1,0 +1,6 @@
+@RestApiTinderClone_HostAddress = http://localhost:5230
+
+GET {{RestApiTinderClone_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
