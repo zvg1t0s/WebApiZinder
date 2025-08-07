@@ -12,6 +12,7 @@ namespace RestApiTinderClone.Services
         Task<List<User>>Get();
         
         Task Delete(int id);
+        Task<string> Auth(User user);
 
         Task AddPhoto( IFormFile file);
 

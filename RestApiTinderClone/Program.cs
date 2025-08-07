@@ -3,6 +3,8 @@ using RestApiTinderClone.Services;
 
 using Amazon;
 using Amazon.S3;
+using RestApiTinderClone.Tools;
+using RestApiTinderClone.Tools.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPhotosService, AS3PhotosService>();
 builder.Services.AddTransient<IUsersService, UserService>();
 builder.Services.AddTransient<IMatchesService, MatchesService>();
+builder.Services.AddTransient<IJWTProvider, JwtProvider>();
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddScoped<TinderDataContext>();

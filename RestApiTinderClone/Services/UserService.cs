@@ -2,27 +2,24 @@
 using RestApiTinderClone.Data;
 using RestApiTinderClone.Models;
 using System.IO;
-using RestApiTinderClone.Data;
 using NetTopologySuite;
+using RestApiTinderClone.Tools;
+using RestApiTinderClone.Tools.Interfaces;
 namespace RestApiTinderClone.Services
 {
     public class UserService : IUsersService
     {
         private TinderDataContext _dataContext;
         private IPhotosService _as3PhotosService;
-        public UserService(TinderDataContext dataContext, IPhotosService as3) { 
+        private IJWTProvider _jwtProvider;
+        public UserService(TinderDataContext dataContext, IPhotosService as3, IJWTProvider jwtProvider) { 
             _dataContext = dataContext;
             _as3PhotosService = as3;
+            _jwtProvider = jwtProvider;
         }
         public async Task<User> Create(User current)
         {
-            /*
-            User last = _dataContext.Users.LastOrDefault();
-            current.Id = last is null ? 1 : last.Id + 1;
             current.Password = Crypt.hashPassword(current.Password);
-            _dataContext.Users.Add(current);
-            return current;
-            */
             await _dataContext.AddAsync(current);
             await _dataContext.SaveChangesAsync();
             return current;
@@ -43,17 +40,21 @@ namespace RestApiTinderClone.Services
             
         
         }
-        public async Task<User> Auth(User user)
+        public async Task<string> Auth(User user)
         {
             var modelInDB = await _dataContext.Users.FirstOrDefaultAsync(x => x.Name == user.Name);
-            if (Crypt.hashPassword(user.Name) == modelInDB?.Password){
-                return modelInDB;
+            if (Crypt.hashPassword(user.Password) == modelInDB?.Password)
+            {
+                return _jwtProvider.Generate(modelInDB);
+                
             }
-            return user;
+            else throw new Exception("Failed to Login");
         }
+
 
         public async Task<User?> Get(int id)
         {
+            
             return await _dataContext.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<List<User>> Get(){

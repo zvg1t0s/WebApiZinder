@@ -16,9 +16,15 @@ namespace RestApiTinderClone.Controllers
         }
         
         [HttpPost]
-        public async Task<User> Create([FromBody]User current)
+        public async Task<User> Register([FromBody]User current)
         {
             return await _usersService.Create(current);
+        }
+        [HttpPost("id")]
+        
+        public async Task<IActionResult> Auth([FromBody] User current)
+        {
+            return Ok(await _usersService.Auth(current));
         }
         [HttpPatch]
         public async Task<string> Update([FromBody]User current) { 

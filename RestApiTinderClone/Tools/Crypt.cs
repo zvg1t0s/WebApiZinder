@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace RestApiTinderClone.Data
+namespace RestApiTinderClone.Tools
 {
     public class Crypt
     {
