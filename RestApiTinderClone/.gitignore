@@ -1,1 +1,1 @@
-﻿git rm --cached appsettings.json
+﻿git rm --cached project/appsettings.json
