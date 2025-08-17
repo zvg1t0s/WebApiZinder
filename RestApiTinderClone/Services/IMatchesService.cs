@@ -9,5 +9,7 @@ namespace RestApiTinderClone.Services
         public Task Dislike(User user1, User user2);
 
         public Task<bool> GetMatch(User user1,User user2);
+
+        public Task<User> GetFirstByPreferencies(User user1);
     }
 }

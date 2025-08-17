@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestApiTinderClone.Services;
 using RestApiTinderClone.Models;
+using System.Threading.Tasks;
 
 namespace RestApiTinderClone.Controllers
 {
@@ -15,6 +16,10 @@ namespace RestApiTinderClone.Controllers
         {
             _usersService = users;
             _matchesService = matchesService;
+        }
+        [HttpPost("Find")]
+        public async Task<User> GetUser([FromBody]User user) {
+            return await _matchesService.GetFirstByPreferencies(user);
         }
         [HttpPost("Like")]
         public async Task<User> LikesAsync([FromBody]User user1, int id)

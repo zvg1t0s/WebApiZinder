@@ -23,5 +23,11 @@ namespace RestApiTinderClone.Models
         [NotMapped]
         [JsonIgnore]
         public Point? Location { get; set; }
+        [JsonIgnore]
+        public List<UserPhoto>? Photos { get; set; }
+
+        public Preferencies Preferencies { get; set; }
+
+        public bool Sex { get; set; } = false;
     }
 }

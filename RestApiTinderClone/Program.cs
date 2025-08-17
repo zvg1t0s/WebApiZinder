@@ -5,6 +5,7 @@ using Amazon;
 using Amazon.S3;
 using RestApiTinderClone.Tools;
 using RestApiTinderClone.Tools.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,13 @@ builder.Services.AddTransient<IMatchesService, MatchesService>();
 builder.Services.AddTransient<IJWTProvider, JwtProvider>();
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();
-builder.Services.AddScoped<TinderDataContext>();
+builder.Services.AddDbContext<TinderDataContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Database"));
+});
+
+
+
 
 
 var app = builder.Build();

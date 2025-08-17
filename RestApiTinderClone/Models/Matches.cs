@@ -7,9 +7,9 @@ namespace RestApiTinderClone.Models
         [Key]
         public int Id { get; set; }
 
-        public int LeftId {  get; set; }
+        public User Left {  get; set; }
 
-        public int RightId { get; set; }
+        public User Right { get; set; }
 
         public bool LeftDecision { get; set; } = false;
 
